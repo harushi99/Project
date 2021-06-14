@@ -1,0 +1,6 @@
+/dist
+/node_modules
+/preview
+/e2e
+/.git
+/.gitignore
