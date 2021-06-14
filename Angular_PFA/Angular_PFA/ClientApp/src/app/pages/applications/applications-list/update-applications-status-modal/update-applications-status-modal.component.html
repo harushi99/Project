@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <div class="modal-title h4">{{ 'APPLICATION.UPDATE_TITLE' | translate }}</div>
+  </div>
+  <div class="modal-body overlay overlay-block cursor-default">
+    <ng-container *ngIf="isLoading">
+      <div class="overlay-layer">
+        <div class="spinner spinner-lg spinner-primary"></div>
+      </div>
+    </ng-container>
+
+    <div class="table-responsive angular-bootstrap-table">
+      <table class="table table-head-custom table-vertical-center overflow-hidden">
+        <thead>
+          <th>ID</th>
+          <th>{{ 'APPLICATION.REQUEST_TYPE' | translate }}</th>
+          <th>{{ 'APPLICATION.STATUS' | translate }}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let application of applications">
+            <td>{{application.id}}</td>
+            <td>{{ papersLabels[application.paper_id] }}</td>
+            <td>
+              <span class="label label-lg label-inline"
+              [class.label-light-primary]="application.state === 'en cours'"
+              [class.label-light-success]="application.state === 'validé'"
+              [class.label-light-danger]="application.state === 'refusé'">
+                {{ application.state }}
+              </span>
+            </td>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="update-section">
+
+    <div class="form-group mr-2" [style.width.%]="28">
+      <label>{{ 'APPLICATION.CHOOSE_STATE' | translate }}</label>
+      <select class="form-control" [(ngModel)]="state" name="state" (change)="handleStateChange($event)">
+        <option value="en cours">{{ 'APPLICATION.PENDING' | translate }}</option>
+        <option value="validé">{{ 'APPLICATION.VALID' | translate }}</option>
+        <option value="refusé">{{ 'APPLICATION.REFUSED' | translate }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="state === 'refusé'" [formGroup]="formGroup">
+      <label>{{ 'APPLICATION.REASON_REFUSAL' | translate }}</label>
+      <textarea
+        name="refusal-reasons"
+        class="form-control form-control-solid"
+        [(ngModel)]="refusalReasons"
+        [class.is-invalid]="isControlInvalid('refusalReasons')"
+				[class.is-valid]="isControlValid('refusalReasons')"
+        formControlName="refusalReasons"
+      ></textarea>
+				<div class="invalid-feedback" *ngIf="controlHasError('required', 'refusalReasons')">
+                  {{ 'APPLICATION.DETAILS_REQUIRED' | translate }}
+				</div>
+    </div>
+    <div class="form-group" *ngIf="state === 'validé'" [formGroup]="formGroup">
+      <label> {{ 'APPLICATION.TIME_TO_PICK' | translate }}</label>
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
+        [(ngModel)]="pickAt" ngbDatepicker #d="ngbDatepicker"
+        [class.is-invalid]="isControlInvalid('pickAt')"
+				[class.is-valid]="isControlValid('pickAt')"
+        formControlName="pickAt"
+        >
+        <div class="invalid-feedback" *ngIf="controlHasError('required', 'pickAt')">
+          {{ 'APPLICATION.DATE_REQUIRED' | translate }}
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-primary" (click)="d.toggle()" type="button">
+            <i class="la la-calendar"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form modal-footer">
+
+    <div class="form-group">
+      <button type="button" class="btn btn-light btn-elevate mr-3" (click)="modal.dismiss()">{{ 'APPLICATION.CANCEL' | translate }}</button>
+      <button type="button" class="btn btn-primary btn-elevate" (click)="updateApplicationState()" [disabled]="updateValidity()">{{ 'APPLICATION.UPDATE_STATE_BUTTON' | translate }}</button>
+    </div>
+  </div>
+

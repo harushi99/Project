@@ -1,0 +1,127 @@
+<div class="card card-custom gutter-b">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{ 'ROLES.LIST' | translate }}</h3>
+		</div>
+		<div class="card-toolbar">
+		    <button type="button" class="btn btn-primary" *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)" (click)="create()">{{ 'ROLES.NEW' | translate }}</button>
+		</div>
+	</div>
+
+	<div class="card-body">
+    <div class="form form-label-right">
+      <div class="form-group row">
+           <div class="col-lg-4" [formGroup]="searchGroup">
+                    <input type="text" class="form-control" name="searchText" placeholder="{{ 'ROLES.SEARCH' | translate }}" value=""
+                           formControlName="searchTerm" /><small class="form-text text-muted"><b>{{ 'ROLES.SEARCH' | translate }}</b> {{ 'ROLES.ALL_FIELD' | translate }}</small>
+                </div>
+      </div>
+  </div>
+    <ng-container *ngIf="grouping.getSelectedRowsCount()">
+      <div class="form">
+        <div
+          class="row align-items-center form-group-actions margin-top-20 margin-bottom-20"
+        >
+          <div class="col-xl-12">
+            <div class="form-group form-group-inline">
+              <div class="form-label form-label-no-wrap">
+                <label class="font-bold font-danger"
+                  ><span
+                    >{{ 'ROLES.SELECTED_RECORDS_COUNT' | translate }}:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span
+                  ></label
+                >
+              </div>
+              <div *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)">
+                <button
+                  type="button"
+                  class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                  (click)="deleteSelected()"
+                >
+                  <i class="fa fa-trash"></i> {{ 'ROLES.DELETE_ALL' | translate }}</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="table-responsive angular-bootstrap-table">
+      <table
+        class="table table-head-custom table-vertical-center overflow-hidden"
+      >
+        <thead>
+          <th class="selection-cell-header" data-row-selection="true">
+            <label class="checkbox checkbox-single"
+              ><input
+                type="checkbox"
+                (click)="grouping.selectAllRows()"
+                [checked]="grouping.checkAreAllRowsSelected()" /><span></span
+            ></label>
+          </th>
+          <th>
+            {{ 'ROLES.NAME' | translate }}
+            <app-sort-icon
+              column="name"
+              [activeColumn]="sorting.column"
+              [activeDirection]="sorting.direction"
+              (sort)="sort($event)"
+            ></app-sort-icon>
+          </th>
+          <th *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)">ACTIONS</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of rolesService.items$ | async">
+            <td class="selection-cell">
+              <label class="checkbox checkbox-single"
+                ><input
+                  type="checkbox"
+                  (click)="grouping.selectRow(role.id)"
+                  [checked]="grouping.isRowSelected(role.id)"
+                />
+                <span></span>
+              </label>
+            </td>
+            <td>{{role.id }}</td>
+            <td>{{role.name}}</td>
+            <td *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)">
+              <a
+                title="Editrole"
+                class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                (click)="edit(role.id)"
+              >
+                <span
+                  [inlineSVG]="
+                    './../assets/media/svg/icons/Communication/Write.svg'
+                  "
+                  cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-primary"
+                >
+                </span>
+              </a>
+              <a
+                title="Deleterole"
+                class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                (click)="delete(role.id)"
+              >
+                <span
+                  [inlineSVG]="'./../assets/media/svg/icons/General/Trash.svg'"
+                  cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-danger"
+                >
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-paginator
+    class="d-flex justify-content-between align-items-center flex-wrap"
+    [paginator]="paginator"
+    [isLoading]="isLoading"
+    (paginate)="paginate($event)"
+  ></app-paginator>
+  </div>
+</div>
+

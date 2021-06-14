@@ -1,34 +1,83 @@
+import { AlertModule } from './pages/alert/alert.module';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ClipboardModule } from 'ngx-clipboard';
+import { TranslateModule } from '@ngx-translate/core';
+import { InlineSVGModule } from 'ng-inline-svg';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AuthService } from './modules/auth/_services/auth.service';
+import { environment } from 'src/environments/environment';
+
+// Highlight JS
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/splash-screen.module';
+// #fake-start#
+import { FakeAPIService } from './_fake/fake-api.service';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+// #fake-end#
+
+function appInitializer(authService: AuthService) {
+  return () => {
+    return new Promise((resolve) => {
+      authService.getUserByToken().subscribe().add(resolve);
+    });
+  };
+}
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
+    BrowserAnimationsModule,
+    SplashScreenModule,
+    TranslateModule.forRoot(),
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    HighlightModule,
+    ClipboardModule,
+    NgxDropzoneModule,
+    // #fake-start#
+    environment.isMockEnabled
+      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
+        passThruUnknownUrl: true,
+        dataEncapsulation: false,
+      })
+      : [],
+    // #fake-end#
+    AppRoutingModule,
+    InlineSVGModule.forRoot(),
+    NgbModule,
+    AlertModule,
+    SweetAlert2Module,
+    NgMultiSelectDropDownModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthService],
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          xml: () => import('highlight.js/lib/languages/xml'),
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          scss: () => import('highlight.js/lib/languages/scss'),
+          json: () => import('highlight.js/lib/languages/json')
+        },
+      },
+    },
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

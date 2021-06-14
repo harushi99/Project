@@ -1,0 +1,34 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                Get application paper
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 statement">
+                <p>Select the paper you want to send, then download the paper, fill the required fields and scan it and upload it
+                </p>
+                <h5>{{(papers|async).length}} papers are available</h5>
+            </div>
+        </div>
+        <div class="card-spacer">
+            <!--begin::Row-->
+            <div class="row m-0 d-flex flex-row justify-content-around align-items-center flex-wrap">
+                <a *ngFor="let paper of PapersListSubject.value"
+                   href="/student/papers-list/{{paper.id}}" class="paper-item bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7">
+          <span
+                  [inlineSVG]="'./assets/media/svg/icons/General/Clipboard.svg'"
+                  class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
+          ></span>
+                    <a href="/student/papers-list/{{paper.id}}" class="text-primary font-weight-bold font-size-h6">
+                        {{paper.label}}
+                    </a>
+                </a>
+            </div>
+            <!--end::Row-->
+        </div>
+    </div>
+</div>

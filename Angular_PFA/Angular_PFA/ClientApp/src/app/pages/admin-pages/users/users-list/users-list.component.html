@@ -1,0 +1,313 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">{{ 'USERS.LIST' | translate }}</h3>
+        </div>
+        <div class="row align-items-center">
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-primary" (click)="edit(addByForm)">{{ 'USERS.REGISTER' | translate }}</button>
+        </div>
+
+        </div>
+    </div>
+    <div class="card-body">
+
+        <!-- begin: Filtration form -->
+        <div class="form form-label-right">
+            <div class="form-group row">
+                <div class="col-lg-4" [formGroup]="searchGroup">
+                    <input type="text" class="form-control" name="searchText" placeholder="{{ 'USERS.SEARCH' | translate }}" value=""
+                           formControlName="searchTerm" /><small class="form-text text-muted"><b>{{ 'USERS.SEARCH' | translate }}</b> {{ 'USERS.IN_ALL' | translate }}</small>
+                </div>
+            </div>
+        </div>
+        <!-- end: Filtration form -->
+
+        <!-- begin: Grouping -->
+        <ng-container *ngIf="grouping.getSelectedRowsCount()">
+            <div class="form">
+                <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                    <div class="col-xl-12">
+                        <div class="form-group form-group-inline">
+                            <div class="form-label form-label-no-wrap">
+                                <label class="font-bold font-danger"><span>{{ 'USERS.SELECTED_RECORDS_COUNT' | translate }}:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                                        (click)="deleteSelected()">
+                                    <i class="fa fa-trash"></i> {{ 'USERS.DELETE_ALL' | translate }}
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                                        (click)="fetchSelected()">
+                                    <i class="fa fa-stream"></i> {{ 'USERS.FETCH' | translate }}
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                                        (click)="updateStatusForSelected()">
+                                    <i class="fa fa-sync-alt"></i> {{ 'USERS.UPDATE' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- end: Grouping -->
+
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                <th class="selection-cell-header" data-row-selection="true">
+                    <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                                                                   [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                </th>
+                <th>
+                    CIN
+                    <app-sort-icon column="cin" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'USERS.FIRSTNAME' | translate }}
+                    <app-sort-icon column="firstName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'USERS.LASTNAME' | translate }}
+                    <app-sort-icon column="lastName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'USERS.EMAIL' | translate }}
+                    <app-sort-icon column="email" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'USERS.ROLE' | translate }}
+                    <app-sort-icon column="role" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>ACTIONS</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of usersService.items$ | async">
+                    <td class="selection-cell">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(user.id)"
+                                                                       [checked]="grouping.isRowSelected(user.id)" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{ user.cin }}</td>
+                    <td>{{ user.fname }}</td>
+                    <td>{{ user.lname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+
+                        <a title="Edit User" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-1"
+                           (click)="editUser(user.id,editByForm)">
+                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                      class="svg-icon svg-icon-md svg-icon-primary">
+                </span>
+                        </a>
+                        <a title="Edit user Roles" class="btn btn-icon btn-light btn-hover-success btn-sm mx-1"
+                        (click)="editRoles(user.id)">
+             <span [inlineSVG]="'./assets/media/svg/icons/Code/Lock-overturning.svg'" cacheSVG="true"
+                   class="svg-icon svg-icon-md svg-icon-success">
+             </span>
+                     </a>
+                        <a title="Delete user" class="btn btn-icon btn-light btn-hover-danger btn-sm mx-1"
+                           (click)="delete(user.cin)">
+                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                      class="svg-icon svg-icon-md svg-icon-danger">
+                </span>
+                        </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end: Table -->
+        <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+                       [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+    </div>
+</div>
+
+<ng-template #addByForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'USERS.ADD_USER' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="createUserFormGroup" class="row align-items-center">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'USERS.FIRSTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'USERS.FIRSTNAME' | translate }}*" formControlName="fname">
+                        <mat-error *ngIf="createUserFormGroup.get('fname').dirty && createUserFormGroup.get('fname').invalid">{{ 'USERS.FNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'USERS.LASTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'USERS.LASTNAME' | translate }}*" formControlName="lname">
+                        <mat-error *ngIf="createUserFormGroup.get('lname').dirty && createUserFormGroup.get('lname').invalid">{{ 'USERS.LNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CIN*</mat-label>
+                        <input matInput type="text" placeholder="CIN*" formControlName="cin">
+                        <mat-error *ngIf="createUserFormGroup.get('cin').dirty && createUserFormGroup.get('cin').hasError('required')">{{ 'USERS.CIN_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="createUserFormGroup.get('cin').hasError('minlength') || createUserFormGroup.get('cin').hasError('maxlength')|| createUserFormGroup.get('cin').hasError('pattern') ">{{ 'USERS.CIN_8_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email*</mat-label>
+                        <input matInput type="text" placeholder="EMAIL*" formControlName="email">
+                        <mat-error *ngIf="createUserFormGroup.get('email').dirty && createUserFormGroup.get('email').hasError('required')">{{ 'USERS.EMAIL_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="createUserFormGroup.get('email').hasError('email')">{{ 'USERS.EMAIL_INVALID' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'USERS.PASSWORD' | translate }}*</mat-label>
+                        <input matInput type="password" placeholder="{{ 'USERS.PASSWORD' | translate }}*" formControlName="password">
+                        <mat-error *ngIf="createUserFormGroup.get('password').dirty && createUserFormGroup.get('password').hasError('required')">{{ 'USERS.PASSWORD_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="createUserFormGroup.get('password').hasError('minlength')">{{ 'USERS.PASSWORD_8_CHAR' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                    <p>{{ 'USERS.ROLE' | translate }}*</p>
+                    <select class="col-lg-12 form-select" aria-label="Default select example" formControlName="role">
+                        <option *ngFor="let role of roles" >
+                            {{role.name}}
+                        </option>
+                    </select>
+            </div>
+
+        </form>
+        <div *ngIf="error" style="text-align: center; margin-top: 26px">
+            <mat-error style="text-align: center">{{ 'USERS.SMTH_WRONG' | translate }} <br/> {{ 'USERS.INTER_VALID' | translate }}</mat-error>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'USERS.CLOSE' | translate }}</button>
+
+        <button type="button" class="btn btn-primary" [disabled]="createUserFormGroup.invalid" (click)="addUserByForm(c)">
+            <span *ngIf="addLoading" class="spinner spinner-white mr-10"></span>
+            {{ 'USERS.ADD' | translate }}</button>
+    </div>
+</ng-template>
+
+<ng-template #editByForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'USERS.EDIT_USER' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="updateUserFormGroup" class="row align-items-center">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'USERS.FIRSTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'USERS.FIRSTNAME' | translate }}*" formControlName="fname">
+                        <mat-error *ngIf="updateUserFormGroup.get('fname').dirty && updateUserFormGroup.get('fname').invalid">{{ 'USERS.FNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'USERS.LASTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'USERS.LASTNAME' | translate }}*" formControlName="lname">
+                        <mat-error *ngIf="updateUserFormGroup.get('lname').dirty && updateUserFormGroup.get('lname').invalid">{{ 'USERS.LNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CIN*</mat-label>
+                        <input matInput type="text" placeholder="CIN*" formControlName="cin">
+                        <mat-error *ngIf="updateUserFormGroup.get('cin').dirty && updateUserFormGroup.get('cin').hasError('required')">{{ 'USERS.CIN_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="updateUserFormGroup.get('cin').hasError('minlength') || updateUserFormGroup.get('cin').hasError('maxlength')|| updateUserFormGroup.get('cin').hasError('pattern') ">{{ 'USERS.CIN_8_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email*</mat-label>
+                        <input matInput type="text" placeholder="EMAIL*" formControlName="email">
+                        <mat-error *ngIf="updateUserFormGroup.get('email').dirty && updateUserFormGroup.get('email').hasError('required')">{{ 'USERS.EMAIL_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="updateUserFormGroup.get('email').hasError('email')">{{ 'USERS.EMAIL_INVALID' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row align-items-center">
+            <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'USERS.PASSWORD' | translate }}</mat-label>
+                    <input matInput type="password" placeholder="{{ 'USERS.PASSWORD' | translate }}*" formControlName="password">
+                    <!--<mat-hint>(Leave blank to keep the same password)</mat-hint>-->
+                    <mat-error *ngIf="updateUserFormGroup.get('password').hasError('minlength')">{{ 'USERS.PASSWORD_8_CHAR' | translate }}</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <br>
+        </form>
+        <div *ngIf="error" style="text-align: center; margin-top: 26px">
+            <mat-error style="text-align: center">{{ 'USERS.SMTH_WRONG' | translate }} <br/> {{ 'USERS.INTER_VALID' | translate }}</mat-error>
+            <!--<mat-error style="text-align: center">{{errorMessage}}</mat-error>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'USERS.CLOSE' | translate }}</button>
+        <!--<button type="button" class="btn btn-secondary" (click)="reset(cin)">Reset</button>-->
+        <button type="button" class="btn btn-primary" [disabled]="updateUserFormGroup.invalid" (click)="updateUserByForm(c)">
+            <span *ngIf="addLoading" class="spinner spinner-white mr-10"></span>
+            {{ 'USERS.UPDATE_BUTTON' | translate }}</button>
+    </div>
+</ng-template>
+
+<ng-template #addByExelFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'USERS.NEW_USER' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col dropzone-panel mb-lg-0 mb-2 form-group">
+                <label>{{ 'USERS.FILE' | translate }}</label>
+                <ngx-dropzone  [multiple]="false"  (change)="fileSelected($event)" accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <ngx-dropzone-label>{{ 'USERS.FILE_UPLOAD' | translate }}</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngIf="file.value as f" [removable]="true" (removed)="onRemove()" >
+                        <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                </ngx-dropzone>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'USERS.CLOSE' | translate }}</button>
+        <button type="button" class="btn btn-primary" [disabled]="file.invalid || error" (click)="addUsersByExelFile(c)">{{ 'USERS.ADD' | translate }}</button>
+    </div>
+</ng-template>
+
+
+

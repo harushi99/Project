@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="modal-title h4">Send new application</div>
+</div>
+<div class="modal-body overlay overlay-block cursor-default">
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer">
+            <div class="spinner spinner-lg spinner-primary"></div>
+        </div>
+    </ng-container>
+
+    <ng-container>
+        <div class="row">
+            <div class="col dropzone-panel mb-lg-0 mb-2 form-group">
+                <label>File</label>
+                <ngx-dropzone  [multiple]="false"  (change)="fileSelected($event)" accept="application/pdf">
+                    <ngx-dropzone-label>File Upload</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngIf="file.value as f" [removable]="true" (removed)="onRemove()" >
+                        <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                </ngx-dropzone>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
+
+<div class="form modal-footer">
+    <div class="form-group">
+        <button type="button" class="btn btn-light btn-elevate mr-3" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-primary btn-elevate" (click)="sendNewApplication()">Send</button>
+    </div>
+</div>

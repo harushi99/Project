@@ -1,0 +1,85 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="modal-title h4" id="example-modal-sizes-title-lg">
+			<ng-container *ngIf="paper">
+				<ng-container *ngIf="paper.id">{{ 'PAPERS.EDIT_PAPER.EDIT' | translate }}</ng-container>
+				<ng-container *ngIf="!paper.id">{{ 'PAPERS.EDIT_PAPER.CREATE' | translate }}</ng-container>
+				{{ 'PAPERS.EDIT_PAPER.PAPER' | translate }}
+				<ng-container *ngIf="paper.id">'{{paper.label}} {{ paper.label }}'</ng-container>
+			</ng-container>
+		</div>
+	</div>
+	<div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px;">
+		<ng-container *ngIf="isLoading$ | async">
+			<div class="overlay-layer bg-transparent">
+				<div class="spinner spinner-lg spinner-success"></div>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="paper">
+			<form action="#" class="form form-label-right" [formGroup]="formGroup">
+				<div class="form-group">
+					<div>
+						<label class="form-label">{{ 'PAPERS.EDIT_PAPER.EDIT_LABEL' | translate }}</label>
+						<input type="text" class="form-control form-control-lg form-control-solid" name="label"
+							placeholder="Label" autocomplete="off" [class.is-invalid]="isControlInvalid('label')"
+							[class.is-valid]="isControlValid('label')" formControlName="label" />
+						<div class="valid-feedback" *ngIf="isControlValid('label')">{{ 'PAPERS.EDIT_PAPER.LABEL_CORRECT' | translate }}</div>
+						<div class="invalid-feedback" *ngIf="controlHasError('required', 'label')">
+							{{ 'PAPERS.EDIT_PAPER.LABEL_REQUIRED' | translate }}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col dropzone-panel mb-lg-0 mb-2 form-group">
+						<label>{{ 'PAPERS.EDIT_PAPER.FILE' | translate }}</label>
+						<ngx-dropzone  [multiple]="false"  (change)="fileSelected($event)" accept="application/pdf">
+							<ngx-dropzone-label>{{ 'PAPERS.EDIT_PAPER.FILE_UPLOAD' | translate }}</ngx-dropzone-label>
+							<ngx-dropzone-preview *ngIf="file as f" [removable]="true" (removed)="onRemove(f)" >
+								<ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+							</ngx-dropzone-preview>
+						</ngx-dropzone>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col form-group mr-2">
+						<label>{{ 'PAPERS.EDIT_PAPER.ASSIGN_TO' | translate }}:</label>
+						<select class="form-control form-control-lg form-control-solid" name="role"
+								[class.is-invalid]="isControlInvalid('role')" formControlName="role">
+							<option *ngFor="let role of appRoles" [ngValue]="role.id">
+								{{role.name}}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="form-label">{{ 'PAPERS.EDIT_PAPER.REQUIREMENTS' | translate }}</label>
+					<mat-form-field class="requirements-field">
+						<mat-chip-list #chipList aria-label="Requirementsselection" class="requirements-list">
+							<mat-chip *ngFor="let requirement of requirements" [selectable]="selectable"
+								[removable]="removable" (removed)="remove(requirement)">
+								{{requirement.name}}
+								<mat-icon matChipRemove *ngIf="removable"><span class="material-icons">
+										{{ 'PAPERS.EDIT_PAPER.CLOSE' | translate }}
+									</span></mat-icon>
+							</mat-chip>
+							<input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+								[matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+						</mat-chip-list>
+					</mat-form-field>
+				</div>
+
+			</form>
+		</ng-container>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">{{ 'PAPERS.EDIT_PAPER.CANCEL' | translate }}</button>
+		<ng-container *ngIf="paper">
+
+			<button type="submit" class="btn btn-primary btn-elevate" (click)="save()"
+				[disabled]="formGroup.invalid">{{ 'PAPERS.EDIT_PAPER.SAVE' | translate }}</button>
+		</ng-container>
+	</div>
+</div>

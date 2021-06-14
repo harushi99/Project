@@ -1,0 +1,343 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">{{ 'STUDENTS.LIST' | translate }}</h3>
+        </div>
+        <div class="row align-items-center">
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-primary" (click)="edit(addByForm)">{{ 'STUDENTS.REGISTER' | translate }}</button>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-success" (click)="edit(addByExelFile)">{{ 'STUDENTS.NEW_BY_EXEL' | translate }}</button>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-success" (click)="exportStudentList()">{{ 'STUDENTS.EXPORT_STUDENTS' | translate }}</button>
+        </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <alert></alert>
+        <!-- begin: Filtration form -->
+        <div class="form form-label-right">
+            <div class="form-group row">
+                <div class="col-lg-4">
+                    <div class="row" [formGroup]="filterGroup">
+                        <div class="col-lg-12">
+                            <select class="form-control" name="level" placeholder="Filter by Level" formControlName="level">
+                                <option value="">{{ 'STUDENTS.ALL' | translate }}</option>
+                                <option *ngFor="let level of levels" value="{{level}}">{{level}}</option>
+                            </select><small class="form-text text-muted"><b>{{ 'STUDENTS.FILTER' | translate }}</b> {{ 'STUDENTS.BY_LEVEL' | translate }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" [formGroup]="searchGroup">
+                    <input type="text" class="form-control" name="searchText" placeholder="{{ 'STUDENTS.SEARCH' | translate }}" value=""
+                           formControlName="searchTerm" /><small class="form-text text-muted"><b>{{ 'STUDENTS.SEARCH' | translate }}</b> {{ 'STUDENTS.IN_ALL' | translate }}</small>
+                </div>
+            </div>
+        </div>
+        <!-- end: Filtration form -->
+
+        <!-- begin: Grouping -->
+        <ng-container *ngIf="grouping.getSelectedRowsCount()">
+            <div class="form">
+                <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+                    <div class="col-xl-12">
+                        <div class="form-group form-group-inline">
+                            <div class="form-label form-label-no-wrap">
+                                <label class="font-bold font-danger"><span>{{ 'STUDENTS.SELECTED_RECORDS_COUNT' | translate }}:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span></label>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                                        (click)="deleteSelected()">
+                                    <i class="fa fa-trash"></i> {{ 'STUDENTS.DELETE_ALL' | translate }}
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                                        (click)="fetchSelected()">
+                                    <i class="fa fa-stream"></i> {{ 'STUDENTS.FETCH' | translate }}
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                                        (click)="updateStatusForSelected()">
+                                    <i class="fa fa-sync-alt"></i> {{ 'STUDENTS.UPDATE' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- end: Grouping -->
+
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom table-vertical-center overflow-hidden">
+                <thead>
+                <th class="selection-cell-header" data-row-selection="true">
+                    <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectAllRows()"
+                                                                   [checked]="grouping.checkAreAllRowsSelected()" /><span></span></label>
+                </th>
+                <th>
+                    CIN
+                    <app-sort-icon column="cin" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'STUDENTS.STUDENT_NUMBER' | translate }}
+                    <app-sort-icon column="nce" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'STUDENTS.FIRSTNAME' | translate }}
+                    <app-sort-icon column="firstName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'STUDENTS.LASTNAME' | translate }}
+                    <app-sort-icon column="lastName" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'STUDENTS.EMAIL' | translate }}
+                    <app-sort-icon column="email" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    {{ 'STUDENTS.LEVEL' | translate }}
+                    <app-sort-icon column="level" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                                   (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>ACTIONS</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let customer of studentsService.items$ | async">
+                    <td class="selection-cell">
+                        <label class="checkbox checkbox-single"><input type="checkbox" (click)="grouping.selectRow(customer.id)"
+                                                                       [checked]="grouping.isRowSelected(customer.id)" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{ customer.cin }}</td>
+                    <td>{{ customer.nce }}</td>
+                    <td>{{ customer.fname }}</td>
+                    <td>{{ customer.lname }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.level }}</td>
+                    <td>
+
+                        <a title="Edit customer" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                           (click)="editStudent(customer.id,editByForm)">
+                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                      class="svg-icon svg-icon-md svg-icon-primary">
+                </span>
+                        </a>
+
+                        <a title="Delete customer" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                           (click)="delete(customer.cin)">
+                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                      class="svg-icon svg-icon-md svg-icon-danger">
+                </span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end: Table -->
+        <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+                       [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+    </div>
+</div>
+
+<ng-template #addByForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'STUDENTS.ADD_USER' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="createStudentFormGroup" class="row align-items-center">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.FIRSTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.FIRSTNAME' | translate }}*" formControlName="fname">
+                        <mat-error *ngIf="createStudentFormGroup.get('fname').dirty && createStudentFormGroup.get('fname').invalid">{{ 'STUDENTS.FNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.LASTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.LASTNAME' | translate }}*" formControlName="lname">
+                        <mat-error *ngIf="createStudentFormGroup.get('lname').dirty && createStudentFormGroup.get('lname').invalid">{{ 'STUDENTS.LNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CIN*</mat-label>
+                        <input matInput type="text" placeholder="CIN*" formControlName="cin">
+                        <mat-error *ngIf="createStudentFormGroup.get('cin').dirty && createStudentFormGroup.get('cin').hasError('required')">{{ 'STUDENTS.CIN_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="createStudentFormGroup.get('cin').hasError('minlength') || createStudentFormGroup.get('cin').hasError('maxlength')|| createStudentFormGroup.get('cin').hasError('pattern') ">{{ 'STUDENTS.CIN_8_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.STUDENT_NUMBER' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.STUDENT_NUMBER' | translate }}*" formControlName="nce">
+                        <mat-error *ngIf="createStudentFormGroup.get('nce').dirty && createStudentFormGroup.get('nce').hasError('required')">{{ 'STUDENTS.STUDENT_NUMBER_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="createStudentFormGroup.get('nce').hasError('minlength') || createStudentFormGroup.get('nce').hasError('maxlength')|| createStudentFormGroup.get('nce').hasError('pattern') ">{{ 'STUDENTS.STUDENT_NUMBER_7_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+                <div class="col-lg-12">
+                    <p>{{ 'STUDENTS.LEVEL' | translate }}*</p>
+                    <select class="col-lg-12 form-select" aria-label="Default select example" formControlName="level">
+                        <option *ngFor="let level of levels" [value]="level">
+                            {{level}}
+                        </option>
+                    </select>
+                </div>
+
+        </form>
+        <div *ngIf="error" style="text-align: center; margin-top: 26px">
+            <mat-error style="text-align: center">{{ 'STUDENTS.SMTH_WRONG' | translate }} <br/> {{ 'STUDENTS.INTER_VALID' | translate }}</mat-error>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'STUDENTS.CLOSE' | translate }}</button>
+        <button type="button" class="btn btn-primary" [disabled]="createStudentFormGroup.invalid" (click)="addStudentByForm(c)">
+            <span *ngIf="addLoading" class="spinner spinner-white mr-10"></span>
+            {{ 'STUDENTS.ADD' | translate }}</button>
+    </div>
+</ng-template>
+
+<ng-template #editByForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'STUDENTS.EDIT_USER' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="updateStudentFormGroup" class="row align-items-center">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.FIRSTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.FIRSTNAME' | translate }}*" formControlName="fname">
+                        <mat-error *ngIf="updateStudentFormGroup.get('fname').dirty && updateStudentFormGroup.get('fname').invalid">{{ 'STUDENTS.FNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.LASTNAME' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.LASTNAME' | translate }}*" formControlName="lname">
+                        <mat-error *ngIf="updateStudentFormGroup.get('lname').dirty && updateStudentFormGroup.get('lname').invalid">{{ 'STUDENTS.LNAME_REQUIRED' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CIN*</mat-label>
+                        <input matInput type="text" placeholder="CIN*" formControlName="cin">
+                        <mat-error *ngIf="updateStudentFormGroup.get('cin').dirty && updateStudentFormGroup.get('cin').hasError('required')">{{ 'STUDENTS.CIN_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="updateStudentFormGroup.get('cin').hasError('minlength') || updateStudentFormGroup.get('cin').hasError('maxlength')|| updateStudentFormGroup.get('cin').hasError('pattern') ">{{ 'STUDENTS.CIN_8_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.EMAIL' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.EMAIL' | translate }}*" formControlName="email">
+                        <mat-error *ngIf="updateStudentFormGroup.get('email').dirty && updateStudentFormGroup.get('email').hasError('required')">{{ 'STUDENTS.EMAIL_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="updateStudentFormGroup.get('email').hasError('email')">{{ 'STUDENTS.EMAIL_INVALID' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'STUDENTS.STUDENT_NUMBER' | translate }}*</mat-label>
+                        <input matInput type="text" placeholder="{{ 'STUDENTS.STUDENT_NUMBER' | translate }}*" formControlName="nce">
+                        <mat-error *ngIf="updateStudentFormGroup.get('nce').dirty && updateStudentFormGroup.get('nce').hasError('required')">{{ 'STUDENTS.STUDENT_NUMBER_REQUIRED' | translate }}</mat-error>
+                        <mat-error *ngIf="updateStudentFormGroup.get('nce').hasError('minlength') || updateStudentFormGroup.get('nce').hasError('maxlength')|| updateStudentFormGroup.get('nce').hasError('pattern') ">{{ 'STUDENTS.STUDENT_NUMBER_7_NUM' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+            <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'STUDENTS.PASSWORD' | translate }}</mat-label>
+                    <input matInput type="password" placeholder="{{ 'STUDENTS.PASSWORD' | translate }}" formControlName="password">
+                    <!--<mat-hint>(Leave blank to keep the same password)</mat-hint>-->
+                    <mat-error *ngIf="updateStudentFormGroup.get('password').hasError('minlength')">{{ 'STUDENTS.PASSWORD_8_CHAR' | translate }}</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <br>
+        <div class="col-lg-12">
+            <p>{{ 'STUDENTS.LEVEL' | translate }}*</p>
+            <select class="col-lg-12 form-select" aria-label="Default select example" formControlName="level">
+                <option *ngFor="let level of levels" [value]="level">
+                    {{level}}
+                </option>
+            </select>
+        </div>
+
+        </form>
+        <div *ngIf="error" style="text-align: center; margin-top: 26px">
+            <mat-error style="text-align: center">{{ 'STUDENTS.SMTH_WRONG' | translate }} <br/> {{ 'STUDENTS.INTER_VALID' | translate }}</mat-error>
+            <!--<mat-error style="text-align: center">{{errorMessage}}</mat-error>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'STUDENTS.CLOSE' | translate }}</button>
+        <!--<button type="button" class="btn btn-secondary" (click)="reset(cin)">Reset</button>-->
+        <button type="button" class="btn btn-primary" [disabled]="updateStudentFormGroup.invalid" (click)="updateStudentByForm(c)">
+            <span *ngIf="addLoading" class="spinner spinner-white mr-10"></span>
+            {{ 'STUDENTS.UPDATE_BUTTON' | translate }}</button>
+    </div>
+</ng-template>
+
+<ng-template #addByExelFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ 'STUDENTS.NEW_STUDENT' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="myForm" >
+            <div class="form-group">
+                <label for="name">{{ 'STUDENTS.LEVEL' | translate }}</label>
+                <select class="col-lg-12 form-select" aria-label="Default select example" formControlName="level">
+                    <option *ngFor="let level of levels" [value]="level">
+                        {{level}}
+                    </option>
+                </select>
+            </div>
+            <div class=" dropzone-panel mb-lg-0 mb-2 form-group">
+                <label for="file">{{ 'STUDENTS.FILE' | translate }}</label>
+                <ngx-dropzone  [multiple]="false"  (change)="onSelect($event)" accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <ngx-dropzone-label>{{ 'STUDENTS.FILE_UPLOAD' | translate }}</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" >
+                        <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                </ngx-dropzone>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="d('Cross click')">{{ 'STUDENTS.CLOSE' | translate }}</button>
+        <button type="button" class="btn btn-primary" [disabled]="myForm.invalid || error" (click)="addStudentsByExelFile(c)">{{ 'STUDENTS.ADD' | translate }}</button>
+    </div>
+</ng-template>
+

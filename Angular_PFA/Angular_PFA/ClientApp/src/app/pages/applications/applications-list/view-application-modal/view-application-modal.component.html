@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <div class="modal-title h4">Application Information</div>
+</div>
+<div class="modal-body overlay overlay-block cursor-default">
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer">
+            <div class="spinner spinner-lg spinner-primary"></div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+        <div class="row text-center">
+            <h4>Application type: {{ papersLabels[application.paper_id] }}</h4>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center text-center">
+            <h4>State:           </h4>
+            <span class="label label-lg label-inline"
+                  [class.label-light-primary]="application.state === 'en cours'"
+                  [class.label-light-success]="application.state === 'validé'"
+                  [class.label-light-danger]="application.state === 'refusé'">
+              {{ application.state }}
+              </span>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center m-5 text-center">
+            <button class="btn btn-light-primary font-weight-bold mr-2" (click)="downloadFile()">View your uploaded file</button>
+        </div>
+        <div *ngIf="application.state === 'refusé'" class="row d-flex justify-content-center align-items-center m-5 text-center message">
+            <h5>This message is written by the administration</h5>
+            <h6>{{application.message}}</h6>
+        </div>
+        <div *ngIf="application.state === 'validé'" class="row d-flex justify-content-center align-items-center m-5 text-center valid">
+            <h5>You can take your paper from INSAT administration on {{application.recieving_date}}</h5>
+        </div>
+    </ng-container>
+
+</div>
+
+<div class="form modal-footer">
+    <div class="form-group">
+        <button type="button" class="btn btn-primary btn-elevate" (click)="modal.dismiss()">OK</button>
+    </div>
+</div>

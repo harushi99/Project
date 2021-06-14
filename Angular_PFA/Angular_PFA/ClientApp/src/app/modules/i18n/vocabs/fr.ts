@@ -1,0 +1,328 @@
+// France
+export const locale = {
+  lang: 'fr',
+  data: {
+    TRANSLATOR: {
+      SELECT: 'choisissez votre langue',
+    },
+    MENU: {
+      NEW: 'Nouveau',
+      ACTIONS: 'Actes',
+      CREATE_POST: 'Créer un nouveau Post',
+      PAGES: 'Pages',
+      FEATURES: 'Fonctionnalités',
+      APPS: 'Applications',
+      DASHBOARD: 'Tableau de Bord',
+      ONLINE_REQ: 'Demandes en ligne',
+      PAPERS: 'Documents',
+      APPLICATIONS: 'Applications',
+      ADMIN_PAPERS: 'Documents administratifs',
+      USERS: 'Utilisateurs',
+      ADMIN: 'Administration',
+      STUDENTS: 'Étudiants',
+      SETTINGS: 'Paramètres',
+      ROLES: 'Les rôles'
+    },
+    AUTH: {
+      GENERAL: {
+        OR: 'Ou',
+        SUBMIT_BUTTON: 'Soumettre',
+        NO_ACCOUNT: 'Ne pas avoir de compte?',
+        SIGNUP_BUTTON: 'Registre',
+        FORGOT_BUTTON: 'Mot de passe oublié',
+        BACK_BUTTON: 'Back',
+        PRIVACY: 'Privacy',
+        LEGAL: 'Legal',
+        CONTACT: 'Contact',
+        WELCOME: 'Bienvenue à l\'INSAT',
+        AT_SERVICE: 'L\'INSAT est à votre service',
+        TERMS: 'Termes',
+        PLANS: 'Plans',
+        CONTACT_US: 'Nous contacter'
+      },
+      LOGIN: {
+        TITLE: 'Créer un compte',
+        BUTTON: 'Sign In',
+      },
+      FORGOT: {
+        TITLE: 'Forgotten Password?',
+        DESC: 'Enter your email to reset your password',
+        SUCCESS: 'Your account has been successfully reset.'
+      },
+      REGISTER: {
+        TITLE: 'Sign Up',
+        DESC: 'Enter your details to create your account',
+        SUCCESS: 'Your account has been successfuly registered.'
+      },
+      INPUT: {
+        EMAIL: 'Email',
+        FULLNAME: 'Fullname',
+        PASSWORD: 'Mot de passe',
+        CONFIRM_PASSWORD: 'Confirm Password',
+        USERNAME: 'Nom d\'utilisateur'
+      },
+      VALIDATION: {
+        INVALID: '{{name}} n\'est pas valide',
+        REQUIRED: '{{name}} est requis',
+        MIN_LENGTH: '{{name}} minimum length is {{min}}',
+        AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
+        NOT_FOUND: 'The requested {{name}} is not found',
+        INVALID_LOGIN: 'The login detail is incorrect',
+        REQUIRED_FIELD: 'Required field',
+        MIN_LENGTH_FIELD: 'Minimum field length:',
+        MAX_LENGTH_FIELD: 'Maximum field length:',
+        INVALID_FIELD: 'Field is not valid',
+      }
+    },
+    ECOMMERCE: {
+      COMMON: {
+        SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés: ',
+        ALL: 'All',
+        SUSPENDED: 'Suspended',
+        ACTIVE: 'Active',
+        FILTER: 'Filter',
+        BY_STATUS: 'by Status',
+        BY_TYPE: 'by Type',
+        BUSINESS: 'Business',
+        INDIVIDUAL: 'Individual',
+        SEARCH: 'Search',
+        IN_ALL_FIELDS: 'in all fields'
+      },
+      ECOMMERCE: 'éCommerce',
+      CUSTOMERS: {
+        CUSTOMERS: 'Les clients',
+        CUSTOMERS_LIST: 'Liste des clients',
+        NEW_CUSTOMER: 'Nouveau client',
+        DELETE_CUSTOMER_SIMPLE: {
+          TITLE: 'Suppression du client',
+          DESCRIPTION: 'Êtes-vous sûr de supprimer définitivement ce client?',
+          WAIT_DESCRIPTION: 'Le client est en train de supprimer ...',
+          MESSAGE: 'Le client a été supprimé'
+        },
+        DELETE_CUSTOMER_MULTY: {
+          TITLE: 'Supprimer les clients',
+          DESCRIPTION: 'Êtes-vous sûr de supprimer définitivement les clients sélectionnés?',
+          WAIT_DESCRIPTION: 'Les clients suppriment ...',
+          MESSAGE: 'Les clients sélectionnés ont été supprimés'
+        },
+        UPDATE_STATUS: {
+          TITLE: 'Le statut a été mis à jour pour les clients sélectionnés',
+          MESSAGE: 'Le statut des clients sélectionnés a été mis à jour avec succès'
+        },
+        EDIT: {
+          UPDATE_MESSAGE: 'Le client a été mis à jour',
+          ADD_MESSAGE: 'Le client a été créé'
+        }
+      }
+    },
+    PAGINATOR: {
+      LOADING: 'Chargement',
+      SHOW_ROWS: 'Affichage des lignes',
+      TO: 'à',
+      OF: 'de'
+    },
+    DASHBOARD: {
+      APPLICATIONS: 'Applications',
+      ADMIN_PAPERS: 'Documents administratifs',
+      ADMIN_USERS: 'Utilisateurs de l\'administration',
+      STUDENTS: 'Étudiants',
+      SERVICES: 'Services',
+      STATS: {
+        APPS: 'Applications',
+        WEEKLY_STATS: 'Statistiques hebdomadaires pour les applications',
+        NEW_ACTIVITIES: 'Nouvelles activités',
+        ESTABLISHED: 'établi',
+        EVENT_ON_APP: 'événement sur demande',
+
+      }
+    },
+    APPLICATION: {
+      LIST: 'Liste des applications',
+      FILTER: 'Filtre',
+      BY_STATE: 'par Statut',
+      BY_TYPE: 'par type de demande',
+      ALL: 'Tout',
+      PENDING: 'en cours',
+      VALID: 'validé',
+      REFUSED: 'refusé',
+      SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés',
+      DELETE_ALL: 'Tout supprimer',
+      UPDATE_STATE: 'Mettre à jour statut',
+      REQUEST_TYPE: 'Type de demande',
+      STATE: 'statut',
+      CREATED_AT: 'date',
+      ACTIONS: 'ACTIONS',
+      EDIT_APP: 'Modifier l\'application',
+      DEL_APP: 'Supprimer l\'application',
+      UPDATE_TITLE: 'Mise à jour de l\'état pour l\'application sélectionnée',
+      STATUS: 'Statut',
+      CHOOSE_STATE: 'choisissez un statut',
+      REASON_REFUSAL: 'motifs de refus',
+      DETAILS_REQUIRED: 'les détails sont requis',
+      TIME_TO_PICK: 'Date de récupération du document',
+      DATE_REQUIRED: 'Date de récupération est requis',
+      CANCEL: 'Annuler',
+      UPDATE_STATE_BUTTON: 'Mettre à jour',
+      APP_DELETE: 'Supprimer l\'application',
+      APP_DELETING: 'L\'application est en cours de suppression',
+      APP_DELETE_SURE: 'Êtes-vous sûr de supprimer définitivement cette application?',
+      DELETE: 'Supprimer'
+    },
+    PAPERS: {
+      LIST: 'Liste des documents',
+      NEW: 'Nouveau document',
+      SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés',
+      DELETE_ALL: 'Tout supprimer',
+      LABEL: 'label',
+      CREATED_AT: 'créé à',
+      UPDATED_AT: 'mis à jour à',
+      ACTIONS: 'ACTIONS',
+      EDIT: 'Modifier le document',
+      DELETE: 'Supprimer le document',
+      EDIT_PAPER: {
+        EDIT: 'Éditer',
+        CREATE: 'Créer',
+        PAPER: 'document',
+        EDIT_LABEL: 'Entrer le libellé du document',
+        LABEL_CORRECT: 'Label a été saisie correctement',
+        LABEL_REQUIRED: 'Le champ de label est obligatoire',
+        FILE: 'Fichier',
+        FILE_UPLOAD: 'Chargement de fichiers',
+        ASSIGN_TO: 'Affecter à',
+        REQUIREMENTS: 'Exigences de document',
+        CLOSE: 'Fermer',
+        CANCEL: 'Annuler',
+        SAVE: 'Sauvegarder'
+      },
+      DELETE_PAPER: {
+        TITLE: 'Supprimer le document',
+        DELETING: 'Le document s\'efface',
+        DELETE_SURE: 'Êtes-vous sûr de supprimer définitivement ce document ?',
+        CANCEL: 'Annuler',
+        DELETE: 'Supprimer'
+      }
+    },
+    USERS: {
+      LIST: 'Liste des utilisateurs',
+      REGISTER: 'Ajouter un nouvel utilisateur par formulaire',
+      ALL: 'Tout',
+      FILTER: 'Filtre',
+      BY_LEVEL: 'par niveau',
+      SEARCH: 'Rechercher',
+      IN_ALL: 'dans tous',
+      SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés',
+      DELETE_ALL: 'Tout supprimer',
+      FETCH: 'Récupérer',
+      UPDATE: 'Mettre à jour le statut',
+      FIRSTNAME: 'Prénom',
+      LASTNAME: 'Nom de famille',
+      EMAIL: 'Email',
+      ROLE: 'Role',
+      ADD_USER: 'Ajouter un nouvel utilisateur',
+      FNAME_REQUIRED: 'Le prénom est requis',
+      LNAME_REQUIRED: 'Le nom de famille est requis',
+      CIN_REQUIRED: 'CIN est requis',
+      CIN_8_NUM: 'CIN doit avoir 8 chiffres',
+      EMAIL_REQUIRED: 'L\'e-mail est requis',
+      EMAIL_INVALID: 'Le courriel est invalide',
+      PASSWORD: 'Mot de passe',
+      PASSWORD_REQUIRED: 'Mot de passe requis',
+      PASSWORD_8_CHAR: 'Le mot de passe doit avoir au moins 8 caractères',
+      SMTH_WRONG: 'Quelque chose s\'est mal passé',
+      INTER_VALID: 'Veuillez entrer des données valides',
+      CLOSE: 'Fermer',
+      ADD: 'Ajouter',
+      EDIT_USER: 'Modifier l\'utilisateur',
+      UPDATE_BUTTON: 'Mettre à jour',
+      NEW_USER: 'Ajouter un nouvel utilisateur',
+      FILE: 'Ficher',
+      FILE_UPLOAD: 'Chargement de fichier',
+      EDIT: {
+        EDIT: 'Edit',
+        ROLE: 'Role of User',
+        CANCEL: 'Cancel',
+        SAVE: 'Save'
+      },
+      DELETE: {
+        TITLE: 'Supprimer l\'utilisateur',
+        DELETING: 'En train de supprimer',
+        SURE: 'Êtes-vous sûr de supprimer définitivement cet utilisateur ?',
+        CANCEL: 'Annuler',
+        DELETE: 'Supprimer'
+      }
+    },
+    STUDENTS: {
+      LIST: 'Liste des étudiants',
+      REGISTER: 'Inscrire un nouvel étudiant par formulaire',
+      NEW_BY_EXEL: 'Nouveaux étudiants par fichier Excel',
+      EXPORT_STUDENTS: 'Exporter les étudiants',
+      ALL: 'Tout',
+      FILTER: 'Filtre',
+      BY_LEVEL: 'par niveau',
+      SEARCH: 'Rechercher',
+      IN_ALL: 'dans tous',
+      SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés',
+      DELETE_ALL: 'Tout supprimer',
+      FETCH: 'Récupérer la sélection',
+      UPDATE: 'Mettre à jour le statut',
+      STUDENT_NUMBER: 'Numéro d\'étudiant',
+      FIRSTNAME: 'Prénom',
+      LASTNAME: 'Nom de famille',
+      EMAIL: 'E-mail',
+      LEVEL: 'Niveau',
+      ADD_USER: 'Ajouter un nouvel étudiant',
+      FNAME_REQUIRED: 'Le prénom est requis',
+      LNAME_REQUIRED: 'Le nom de famille est requis',
+      STUDENT_NUMBER_REQUIRED: 'Le numéro de carte d\'étudiant est requis',
+      STUDENT_NUMBER_7_NUM: 'Le numéro de carte d\'étudiant doit avoir 7 chiffres',
+      CIN_REQUIRED: 'CIN est requis',
+      CIN_8_NUM: 'CIN doit avoir 8 chiffres',
+      EMAIL_REQUIRED: 'L\'e-mail est requis',
+      EMAIL_INVALID: 'E-mail est invalide',
+      PASSWORD: 'Mot de passe',
+      PASSWORD_REQUIRED: 'Mot de passe requis',
+      PASSWORD_8_CHAR: 'Le mot de passe doit avoir au moins 8 caractères',
+      SMTH_WRONG: 'Quelque chose s\'est mal passé',
+      INTER_VALID: 'Veuillez entrer des données valides',
+      CLOSE: 'Fermer',
+      ADD: 'Ajouter',
+      EDIT_USER: 'Modifier l\'étudiant',
+      UPDATE_BUTTON: 'Mettre à jour',
+      NEW_USER: 'Ajouter un nouvel utilisateur',
+      FILE: 'Fichier',
+      FILE_UPLOAD: 'Chargement de fichier Excel',
+      NEW_STUDENT: 'Ajouter de nouveaux étudiants'
+    },
+    ROLES: {
+      LIST: 'Liste des rôles',
+      NEW: 'Nouveau rôle',
+      SEARCH: 'Rechercher',
+      ALL_FIELD: 'dans tous',
+      SELECTED_RECORDS_COUNT: 'Nombre d\'enregistrements sélectionnés',
+      DELETE_ALL: 'Tout supprimer',
+      NAME: 'Nom',
+      EDIT: {
+        EDIT: 'Modifier',
+        ROLE: 'role',
+        CANCEL: 'Annuler',
+        SAVE: 'Sauvegarder',
+      },
+      DELETE: {
+        TITLE: 'Supprimer Rôle',
+        DELETING: 'Le rôle est en cours de suppression',
+        SURE: 'Êtes-vous sûr de supprimer définitivement ce rôle ?',
+        CANCEL: 'Annuler',
+        DELETE: 'Supprimer'
+      },
+      CREATE: {
+        CREATE: 'Create',
+        ROLE: 'role',
+        NAME: 'Enter Name',
+        NAME_CORRECT: 'name was entered correct',
+        NAME_REQUIRED: 'name is required',
+        CANCEL: 'Annuler',
+        SAVE: 'Save'
+      }
+    }
+  }
+};

@@ -1,0 +1,328 @@
+// USA
+export const locale = {
+  lang: 'en',
+  data: {
+    TRANSLATOR: {
+      SELECT: 'Select your language',
+    },
+    MENU: {
+      NEW: 'new',
+      ACTIONS: 'Actions',
+      CREATE_POST: 'Create New Post',
+      PAGES: 'Pages',
+      FEATURES: 'Features',
+      APPS: 'Apps',
+      DASHBOARD: 'Dashboard',
+      ONLINE_REQ: 'Online Requests',
+      PAPERS: 'Papers',
+      APPLICATIONS: 'Applications',
+      ADMIN_PAPERS: 'Administrative Papers',
+      USERS: 'Users',
+      ADMIN: 'Administration',
+      STUDENTS: 'Students',
+      SETTINGS: 'Settings',
+      ROLES: 'Roles'
+    },
+    AUTH: {
+      GENERAL: {
+        OR: 'Or',
+        SUBMIT_BUTTON: 'Submit',
+        NO_ACCOUNT: 'Don\'t have an account?',
+        SIGNUP_BUTTON: 'Sign Up',
+        FORGOT_BUTTON: 'Forgot Password',
+        BACK_BUTTON: 'Back',
+        PRIVACY: 'Privacy',
+        LEGAL: 'Legal',
+        CONTACT: 'Contact',
+        WELCOME: 'Welcome to INSAT',
+        AT_SERVICE: 'INSAT is at your service',
+        TERMS: 'Terms',
+        PLANS: 'Plans',
+        CONTACT_US: 'Contact Us'
+      },
+      LOGIN: {
+        TITLE: 'Login Account',
+        BUTTON: 'Sign In',
+      },
+      FORGOT: {
+        TITLE: 'Forgotten Password?',
+        DESC: 'Enter your email to reset your password',
+        SUCCESS: 'Your account has been successfully reset.'
+      },
+      REGISTER: {
+        TITLE: 'Sign Up',
+        DESC: 'Enter your details to create your account',
+        SUCCESS: 'Your account has been successfuly registered.'
+      },
+      INPUT: {
+        EMAIL: 'Email',
+        FULLNAME: 'Fullname',
+        PASSWORD: 'Password',
+        CONFIRM_PASSWORD: 'Confirm Password',
+        USERNAME: 'Username'
+      },
+      VALIDATION: {
+        INVALID: '{{name}} is not valid',
+        REQUIRED: '{{name}} is required',
+        MIN_LENGTH: '{{name}} minimum length is {{min}}',
+        AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
+        NOT_FOUND: 'The requested {{name}} is not found',
+        INVALID_LOGIN: 'The login detail is incorrect',
+        REQUIRED_FIELD: 'Required field',
+        MIN_LENGTH_FIELD: 'Minimum field length:',
+        MAX_LENGTH_FIELD: 'Maximum field length:',
+        INVALID_FIELD: 'Field is not valid',
+      }
+    },
+    ECOMMERCE: {
+      COMMON: {
+        SELECTED_RECORDS_COUNT: 'Selected records count: ',
+        ALL: 'All',
+        SUSPENDED: 'Suspended',
+        ACTIVE: 'Active',
+        FILTER: 'Filter',
+        BY_STATUS: 'by Status',
+        BY_TYPE: 'by Type',
+        BUSINESS: 'Business',
+        INDIVIDUAL: 'Individual',
+        SEARCH: 'Search',
+        IN_ALL_FIELDS: 'in all fields'
+      },
+      ECOMMERCE: 'eCommerce',
+      CUSTOMERS: {
+        CUSTOMERS: 'Customers',
+        CUSTOMERS_LIST: 'Customers list',
+        NEW_CUSTOMER: 'New Customer',
+        DELETE_CUSTOMER_SIMPLE: {
+          TITLE: 'Customer Delete',
+          DESCRIPTION: 'Are you sure to permanently delete this customer?',
+          WAIT_DESCRIPTION: 'Customer is deleting...',
+          MESSAGE: 'Customer has been deleted'
+        },
+        DELETE_CUSTOMER_MULTY: {
+          TITLE: 'Customers Delete',
+          DESCRIPTION: 'Are you sure to permanently delete selected customers?',
+          WAIT_DESCRIPTION: 'Customers are deleting...',
+          MESSAGE: 'Selected customers have been deleted'
+        },
+        UPDATE_STATUS: {
+          TITLE: 'Status has been updated for selected customers',
+          MESSAGE: 'Selected customers status have successfully been updated'
+        },
+        EDIT: {
+          UPDATE_MESSAGE: 'Customer has been updated',
+          ADD_MESSAGE: 'Customer has been created'
+        }
+      }
+    },
+    PAGINATOR: {
+      LOADING: 'Loading',
+      SHOW_ROWS: 'Showing rows',
+      TO: 'to',
+      OF: 'of'
+    },
+    DASHBOARD: {
+      APPLICATIONS: 'Applications',
+      ADMIN_PAPERS: 'Administrative papers',
+      ADMIN_USERS: 'Administration Users',
+      STUDENTS: 'Students',
+      SERVICES: 'Services',
+      STATS: {
+        APPS: 'Applications',
+        WEEKLY_STATS: 'Weekly Stats for Applications',
+        NEW_ACTIVITIES: 'New Activities',
+        ESTABLISHED: 'established',
+        EVENT_ON_APP: 'event on application',
+
+      }
+    },
+    APPLICATION: {
+      LIST: 'Applications List',
+      FILTER: 'Filter',
+      BY_STATE: 'by State',
+      BY_TYPE: 'by request type',
+      ALL: 'All',
+      PENDING: 'pending',
+      VALID: 'valid',
+      REFUSED: 'refused',
+      SELECTED_RECORDS_COUNT: 'Selected records count',
+      DELETE_ALL: 'Delete All',
+      UPDATE_STATE: 'Update State',
+      REQUEST_TYPE: 'Request type',
+      STATE: 'state',
+      CREATED_AT: 'created at',
+      ACTIONS: 'ACTIONS',
+      EDIT_APP: 'Edit application',
+      DEL_APP: 'Delete application',
+      UPDATE_TITLE: 'State update for selected application',
+      STATUS: 'State',
+      CHOOSE_STATE: 'choose a state',
+      REASON_REFUSAL: 'Reasons of refusal',
+      DETAILS_REQUIRED: 'details are required',
+      TIME_TO_PICK: 'Time to pick',
+      DATE_REQUIRED: 'Receiving date is required',
+      CANCEL: 'Cancel',
+      UPDATE_STATE_BUTTON: 'Update State',
+      APP_DELETE: 'Application Delete',
+      APP_DELETING: 'Application is deleting',
+      APP_DELETE_SURE: 'Are you sure to permanently delete this Application?',
+      DELETE: 'Delete'
+    },
+    PAPERS: {
+      LIST: 'Documents List',
+      NEW: 'New Paper',
+      SELECTED_RECORDS_COUNT: 'Selected records count',
+      DELETE_ALL: 'Delete All',
+      LABEL: 'label',
+      CREATED_AT: 'created at',
+      UPDATED_AT: 'updated at',
+      ACTIONS: 'ACTIONS',
+      EDIT: 'Edit paper',
+      DELETE: 'Delete paper',
+      EDIT_PAPER: {
+        EDIT: 'Edit',
+        CREATE: 'Create',
+        PAPER: 'paper',
+        EDIT_LABEL: 'Enter Paper\'s Label',
+        LABEL_CORRECT: 'Label was entered correct',
+        LABEL_REQUIRED: 'Label field is required',
+        FILE: 'File',
+        FILE_UPLOAD: 'File Upload',
+        ASSIGN_TO: 'Assign to',
+        REQUIREMENTS: 'Paper Requirements',
+        CLOSE: 'close',
+        CANCEL: 'Cancel',
+        SAVE: 'Save'
+      },
+      DELETE_PAPER: {
+        TITLE: 'Paper Delete',
+        DELETING: 'Paper is deleting',
+        DELETE_SURE: 'Are you sure to permanently delete this Paper?',
+        CANCEL: 'Cancel',
+        DELETE: 'Delete'
+      }
+    },
+    USERS: {
+      LIST: 'Users list',
+      REGISTER: 'Register New User by form',
+      ALL: 'All',
+      FILTER: 'Filter',
+      BY_LEVEL: 'by Level',
+      SEARCH: 'Search',
+      IN_ALL: 'in all fields',
+      SELECTED_RECORDS_COUNT: 'Selected records count',
+      DELETE_ALL: 'Delete All',
+      FETCH: 'Fetch Selected',
+      UPDATE: 'Update Status',
+      FIRSTNAME: 'First Name',
+      LASTNAME: 'Last Name',
+      EMAIL: 'Email',
+      ROLE: 'Role',
+      ADD_USER: 'Add New User',
+      FNAME_REQUIRED: 'First Name is required',
+      LNAME_REQUIRED: 'Last Name is required',
+      CIN_REQUIRED: 'CIN is required',
+      CIN_8_NUM: 'CIN must have 8 numbers',
+      EMAIL_REQUIRED: 'Email is required',
+      EMAIL_INVALID: 'Email is invalid',
+      PASSWORD: 'Password',
+      PASSWORD_REQUIRED: 'Password is required',
+      PASSWORD_8_CHAR: 'Password must have minimum 8 characters',
+      SMTH_WRONG: 'Something Went wrong',
+      INTER_VALID: 'Please Enter valid data',
+      CLOSE: 'Close',
+      ADD: 'Add',
+      EDIT_USER: 'Edit User',
+      UPDATE_BUTTON: 'Update',
+      NEW_USER: 'Add New User',
+      FILE: 'File',
+      FILE_UPLOAD: 'File Upload',
+      EDIT: {
+        EDIT: 'Éditer',
+        ROLE: 'Rôle de l\'utilisateur',
+        CANCEL: 'Annuler',
+        SAVE: 'Sauvegarder'
+      },
+      DELETE: {
+        TITLE: 'User Delete',
+        DELETING: 'User is deleting',
+        SURE: 'Are you sure to permanently delete this user?',
+        CANCEL: 'Cancel',
+        DELETE: 'Delete'
+      }
+    },
+    STUDENTS: {
+      LIST: 'Students list',
+      REGISTER: 'Register New Student by form',
+      NEW_BY_EXEL: 'New Students by Excel file',
+      EXPORT_STUDENTS: 'Export Students',
+      ALL: 'All',
+      FILTER: 'Filter',
+      BY_LEVEL: 'by Level',
+      SEARCH: 'Search',
+      IN_ALL: 'in all fields',
+      SELECTED_RECORDS_COUNT: 'Selected records count',
+      DELETE_ALL: 'Delete All',
+      FETCH: 'Fetch Selected',
+      UPDATE: 'Update Status',
+      STUDENT_NUMBER: 'Student number',
+      FIRSTNAME: 'First Name',
+      LASTNAME: 'Last Name',
+      EMAIL: 'Email',
+      LEVEL: 'Level',
+      ADD_USER: 'Add New Student',
+      FNAME_REQUIRED: 'First Name is required',
+      LNAME_REQUIRED: 'Last Name is required',
+      STUDENT_NUMBER_REQUIRED: 'Student Card Number is required',
+      STUDENT_NUMBER_7_NUM: 'Student Card Number must have 7 numbers',
+      CIN_REQUIRED: 'CIN is required',
+      CIN_8_NUM: 'CIN must have 8 numbers',
+      EMAIL_REQUIRED: 'Email is required',
+      EMAIL_INVALID: 'Email is invalid',
+      PASSWORD: 'Password',
+      PASSWORD_REQUIRED: 'Password is required',
+      PASSWORD_8_CHAR: 'Password must have minimum 8 characters',
+      SMTH_WRONG: 'Something Went wrong',
+      INTER_VALID: 'Please Enter valid data',
+      CLOSE: 'Close',
+      ADD: 'Add',
+      EDIT_USER: 'Edit Student',
+      UPDATE_BUTTON: 'Update',
+      NEW_USER: 'Add New User',
+      FILE: 'File',
+      FILE_UPLOAD: 'File Excel Upload',
+      NEW_STUDENT: 'Add New Students'
+    },
+    ROLES: {
+      LIST: 'Roles List',
+      NEW: 'New Role',
+      SEARCH: 'Search',
+      ALL_FIELD: 'in all fields',
+      SELECTED_RECORDS_COUNT: 'Selected records count',
+      DELETE_ALL: 'Delete All',
+      NAME: 'Name',
+      EDIT: {
+        EDIT: 'Edit',
+        ROLE: 'role',
+        CANCEL: 'Cancel',
+        SAVE: 'Save',
+      },
+      DELETE: {
+        TITLE: 'Role Delete',
+        DELETING: 'Role is deleting',
+        SURE: 'Are you sure to permanently delete this Role?',
+        CANCEL: 'Cancel',
+        DELETE: 'Delete'
+      },
+      CREATE: {
+        CREATE: 'Créer',
+        ROLE: 'un role',
+        NAME: 'Entrez le nom du role',
+        NAME_CORRECT: 'le nom a été entré correctement',
+        NAME_REQUIRED: 'Le nom est requis',
+        CANCEL: 'Annuler',
+        SAVE: 'Sauvegarder'
+      }
+    }
+  }
+};

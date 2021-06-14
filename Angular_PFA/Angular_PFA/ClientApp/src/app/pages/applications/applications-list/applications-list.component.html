@@ -1,0 +1,201 @@
+<div class="card card-custom gutter-b">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{ 'APPLICATION.LIST' | translate }}</h3>
+		</div>
+		<div class="card-toolbar">
+        </div>
+	</div>
+	<div class="card-body">
+    <div class="form form-label-right">
+      <div class="form-group row">
+        <div class="col-lg-4">
+          <div class="row" [formGroup]="filterGroup">
+            <div class="col-lg-6">
+              <select
+                class="form-control"
+                name="state"
+                formControlName="state"
+              >
+                <option value="">{{ 'APPLICATION.ALL' | translate }}</option>
+                <option value="en cours">{{ 'APPLICATION.PENDING' | translate }}</option>
+                <option value="validé">{{ 'APPLICATION.VALID' | translate }}</option>
+                <option value="refusé">{{ 'APPLICATION.REFUSED' | translate }}</option>
+                </select>
+              <small class="form-text text-muted">
+                <b>{{ 'APPLICATION.FILTER' | translate }}</b> {{ 'APPLICATION.BY_STATE' | translate }}
+              </small>
+            </div>
+            <div class="col-lg-6">
+              <select
+                class="form-control"
+                name="paper_id"
+                formControlName="paper_id"
+              >
+                <option value="">{{ 'APPLICATION.ALL' | translate }}</option>
+                <ng-container *ngFor="let paper of papers">
+                  <option [ngValue]="paper.id">{{ paper.label }}</option>
+                </ng-container>
+                </select>
+              <small class="form-text text-muted">
+                <b>{{ 'APPLICATION.FILTER' | translate }}</b> {{ 'APPLICATION.BY_TYPE' | translate }}
+            </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="grouping.getSelectedRowsCount()">
+      <div class="form">
+        <div
+          class="row align-items-center form-group-actions margin-top-20 margin-bottom-20"
+        >
+          <div class="col-xl-12">
+            <div class="form-group form-group-inline">
+              <div class="form-label form-label-no-wrap">
+                <label class="font-bold font-danger"
+                  ><span
+                    >{{ 'APPLICATION.SELECTED_RECORDS_COUNT' | translate }}:
+                    <b>{{ grouping.getSelectedRowsCount() }}</b></span
+                  ></label
+                >
+              </div>
+              <div>
+                <button *ngIf="authService.checkIfUserHasRole(roles.ADMIN)"
+                  type="button"
+                  class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                  (click)="deleteSelected()"
+                >
+                  <i class="fa fa-trash"></i> {{ 'APPLICATION.DELETE_ALL' | translate }}</button
+                >&nbsp;
+                <button *ngIf="authService.checkIfUserHasRolesFromList([roles.ADMIN, roles.SCOLARITY])"
+                  type="button"
+                  class="btn btn-light-primary font-weight-bolder font-size-sm"
+                  (click)="updateStatusForSelected()"
+                >
+                  <i class="fa fa-sync-alt"></i> {{ 'APPLICATION.UPDATE_STATE' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="table-responsive angular-bootstrap-table">
+      <table
+        class="table table-head-custom table-vertical-center overflow-hidden"
+      >
+        <thead>
+          <th class="selection-cell-header" data-row-selection="true">
+            <label class="checkbox checkbox-single"
+              ><input
+                type="checkbox"
+                (click)="grouping.selectAllRows()"
+                [checked]="grouping.checkAreAllRowsSelected()" /><span></span
+            ></label>
+          </th>
+          <th>
+            {{ 'APPLICATION.REQUEST_TYPE' | translate }}
+            <app-sort-icon
+              column="paper_id"
+              [activeColumn]="sorting.column"
+              [activeDirection]="sorting.direction"
+              (sort)="sort($event)"
+            ></app-sort-icon>
+          </th>
+          <th>
+            {{ 'APPLICATION.STATE' | translate }}
+            <app-sort-icon
+              column="state"
+              [activeColumn]="sorting.column"
+              [activeDirection]="sorting.direction"
+              (sort)="sort($event)"
+            ></app-sort-icon>
+          </th>
+          <th>
+            {{ 'APPLICATION.CREATED_AT' | translate }}
+            <app-sort-icon
+              column="created_at"
+              [activeColumn]="sorting.column"
+              [activeDirection]="sorting.direction"
+              (sort)="sort($event)"
+            ></app-sort-icon>
+          </th>
+          <th> {{ 'APPLICATION.ACTIONS' | translate }}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let application of applications | async">
+            <td class="selection-cell">
+              <label class="checkbox checkbox-single"
+                ><input
+                  type="checkbox"
+                  (click)="grouping.selectRow(application.id)"
+                  [checked]="grouping.isRowSelected(application.id)"
+                />
+                <span></span>
+              </label>
+            </td>
+            <td>{{ papersLabels[application.paper_id] }}</td>
+            <td>
+              <span class="label label-lg label-inline"
+              [class.label-light-primary]="application.state === 'en cours'"
+              [class.label-light-success]="application.state === 'validé'"
+              [class.label-light-danger]="application.state === 'refusé'">
+              {{ application.state }}
+              </span>
+            </td>
+            <td>{{ application.created_at | date: 'short': 'fr'}}</td>
+            <td>
+              <a
+                title="{{ 'APPLICATION.EDIT_APP' | translate }}"
+                class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                [routerLink]="'/ecommerce/application/edit/' + application.id"
+              >
+                <span
+                  [inlineSVG]="
+                    './assets/media/svg/icons/Communication/Write.svg'
+                  "
+                  cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-primary"
+                >
+                </span>
+              </a>
+
+              <a *ngIf="authService.checkIfUserHasRole(roles.STUDENT)"
+                 title="{{ 'APPLICATION.DEL_APP' | translate }}"
+                 class="btn btn-icon btn-light btn-hover-primary btn-sm"
+                 (click)="viewApplication(application.id)"
+              >
+                <span
+                        [inlineSVG]="'./assets/media/svg/icons/Home/Book-open.svg'"
+                        cacheSVG="true"
+                        class="svg-icon svg-icon-md svg-icon-primary"
+                >
+                </span>
+              </a>
+
+              <a *ngIf="authService.checkIfUserHasRole(roles.ADMIN)"
+                title="{{ 'APPLICATION.DEL_APP' | translate }}"
+                class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                (click)="delete(application.id)"
+              >
+                <span
+                  [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'"
+                  cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-danger"
+                >
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-paginator
+    class="d-flex justify-content-between align-items-center flex-wrap"
+    [paginator]="paginator"
+    [isLoading]="isLoading"
+    (paginate)="paginate($event)"
+  ></app-paginator>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="card card-custom card-stretch card-stretch-half gutter-b">
+    <!-- Body -->
+    <div class="card-body p-0">
+      <div
+        class="d-flex align-items-center justify-content-end card-spacer flex-grow-1"
+      >
+        <div class="d-flex flex-column text-right">
+          <span class="text-dark-75 font-weight-bolder font-size-h3">{{ TotalActions }} {{ 'DASHBOARD.STATS.APPS' | translate }}</span>
+          <span class="text-muted font-weight-bold mt-2">{{ 'DASHBOARD.STATS.WEEKLY_STATS' | translate }}</span>
+        </div>
+      </div>
+      <!--begin::Chart-->
+      <div
+        id="kt_stats_widget_11_chart"
+        class="card-rounded-bottom"
+        [style.height]="'150px'"
+        [style.width]="'600px'"
+      >
+        <apx-chart
+          [series]="(chartOptions | async).series"
+          [chart]="(chartOptions | async).chart"
+          [xaxis]="(chartOptions | async).xaxis"
+          [yaxis]="(chartOptions | async).yaxis"
+          [dataLabels]="(chartOptions | async).dataLabels"
+          [stroke]="(chartOptions | async).stroke"
+          [legend]="(chartOptions | async).legend"
+          [states]="(chartOptions | async).states"
+          [tooltip]="(chartOptions | async).tooltip"
+          [colors]="(chartOptions | async).colors"
+          [markers]="(chartOptions | async).markers"
+          [plotOptions]="(chartOptions | async).plotOptions"
+        >
+        </apx-chart>
+      </div>
+      <!--end::Chart-->
+      <!--end::Stats-->
+    </div>
+  </div>

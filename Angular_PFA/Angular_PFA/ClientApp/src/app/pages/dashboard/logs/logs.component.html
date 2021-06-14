@@ -1,0 +1,38 @@
+<div class="card card-custom card-stretch gutter-b">
+  <!-- Header -->
+  <div class="card-header align-items-center border-0 mt-4">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="font-weight-bolder text-dark">{{ 'DASHBOARD.STATS.NEW_ACTIVITIES' | translate }}</span>
+      <span class="text-muted mt-3 font-weight-bold font-size-sm">{{ (logs | async).length }} {{ 'DASHBOARD.STATS.APPS' | translate }}</span>
+    </h3>
+    <div class="card-body scrollable pt-4">
+      <div class="timeline timeline-6 mt-3">
+        <ng-container *ngFor="let log of logs | async">
+          <div class="timeline-item align-items-start">
+
+              <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg log-date">
+                {{ log.created_at | date: 'short': 'fr'}}
+              </div>
+
+              <div class="timeline-badge">
+                <i class="fa fa-genderless icon-xl" [ngClass]="{
+                'text-danger': log.event === 'refusé',
+                'text-primary': log.event === 'créée',
+                'text-success': log.event === 'validé',
+                'text-info': log.event === 'modifié',
+                'text-warning': log.event === 'supprimée'
+
+              }"></i>
+              </div>
+
+
+            <div class="timeline-content font-weight-bolder font-size-lg text-dark-75 pl-3">
+              {{ log.user_fullname }} ({{log.user_roles[0]}}) {{ 'DASHBOARD.STATS.ESTABLISHED' | translate }} <span class="text-primary">"{{ log.event
+                }}"</span> {{ 'DASHBOARD.STATS.EVENT_ON_APP' | translate }} {{ log.target_id }}.
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
