@@ -18,8 +18,32 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\account\**" />
+    <Compile Remove="ClientApp\src\app\users\**" />
+    <Compile Remove="ClientApp\src\app\_components\**" />
+    <Compile Remove="ClientApp\src\app\_helpers\**" />
+    <Compile Remove="ClientApp\src\app\_models\**" />
+    <Compile Remove="ClientApp\src\app\_services\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\account\**" />
+    <Content Remove="ClientApp\src\app\users\**" />
+    <Content Remove="ClientApp\src\app\_components\**" />
+    <Content Remove="ClientApp\src\app\_helpers\**" />
+    <Content Remove="ClientApp\src\app\_models\**" />
+    <Content Remove="ClientApp\src\app\_services\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\account\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\users\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\_components\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\_helpers\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\_models\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\_services\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\account\**" />
+    <None Remove="ClientApp\src\app\users\**" />
+    <None Remove="ClientApp\src\app\_components\**" />
+    <None Remove="ClientApp\src\app\_helpers\**" />
+    <None Remove="ClientApp\src\app\_models\**" />
+    <None Remove="ClientApp\src\app\_services\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
