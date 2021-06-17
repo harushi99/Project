@@ -146,6 +146,7 @@
             </td>
             <td>{{ application.created_at | date: 'short': 'fr'}}</td>
             <td>
+             <!--
               <a
                 title="{{ 'APPLICATION.EDIT_APP' | translate }}"
                 class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
@@ -160,7 +161,7 @@
                 >
                 </span>
               </a>
-
+              -->
               <a *ngIf="authService.checkIfUserHasRole(roles.STUDENT)"
                  title="{{ 'APPLICATION.DEL_APP' | translate }}"
                  class="btn btn-icon btn-light btn-hover-primary btn-sm"
