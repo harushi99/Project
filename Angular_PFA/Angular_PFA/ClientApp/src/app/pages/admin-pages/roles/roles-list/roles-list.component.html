@@ -68,7 +68,6 @@
               (sort)="sort($event)"
             ></app-sort-icon>
           </th>
-          <th *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)">ACTIONS</th>
         </thead>
         <tbody>
           <tr *ngFor="let role of rolesService.items$ | async">
@@ -82,7 +81,6 @@
                 <span></span>
               </label>
             </td>
-            <td>{{role.id }}</td>
             <td>{{role.name}}</td>
             <td *ngIf="authService.checkIfUserHasRole(rolesTypes.ADMIN)">
               <a
